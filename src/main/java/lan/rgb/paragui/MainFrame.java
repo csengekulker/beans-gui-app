@@ -89,6 +89,8 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         birthField = new javax.swing.JTextField();
+        jPanel7 = new javax.swing.JPanel();
+        storeButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.PAGE_AXIS));
@@ -189,6 +191,19 @@ public class MainFrame extends javax.swing.JFrame {
 
         getContentPane().add(jPanel6);
 
+        jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel7.setLayout(new java.awt.GridLayout());
+
+        storeButton.setText("Adatbázisba mentés");
+        storeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                storeButtonActionPerformed(evt);
+            }
+        });
+        jPanel7.add(storeButton);
+
+        getContentPane().add(jPanel7);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -238,6 +253,14 @@ public class MainFrame extends javax.swing.JFrame {
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
         this.nextEmployee();
     }//GEN-LAST:event_nextButtonActionPerformed
+
+    private void storeEmployee() {
+        
+    }
+    
+    private void storeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storeButtonActionPerformed
+        this.storeEmployee();
+    }//GEN-LAST:event_storeButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -289,9 +312,11 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JTextField nameField;
     private javax.swing.JButton nextButton;
     private javax.swing.JButton prevButton;
     private javax.swing.JTextField salaryField;
+    private javax.swing.JButton storeButton;
     // End of variables declaration//GEN-END:variables
 }
