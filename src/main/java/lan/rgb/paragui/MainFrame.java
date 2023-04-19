@@ -6,6 +6,10 @@ package lan.rgb.paragui;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -18,6 +22,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     ArrayList<Employee> empList;
     Integer currentId;
+    Connection conn;
+
 
     public MainFrame() {
         initComponents();
@@ -254,8 +260,50 @@ public class MainFrame extends javax.swing.JFrame {
         this.nextEmployee();
     }//GEN-LAST:event_nextButtonActionPerformed
 
-    private void storeEmployee() {
+    private void tryStoreEmployee() throws SQLException, ClassNotFoundException {
+        Class.forName("org.mariadb.jdbc.Driver");
+        Employee emp = retrieveEmployee();
         
+        String url = "jdbc:mariadb://localhost:3306/para";
+        conn = DriverManager.getConnection(url, "para", "titok");
+        
+        String query = "insert into employees" +
+                "(name, city, salary, birth) values" +
+                "(?, ?, ?, ?)";
+        
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        
+        pstmt.setString(1, emp.name);
+        pstmt.setString(2, emp.city);
+        pstmt.setDouble(3, emp.salary);
+        pstmt.setDate(4, java.sql.Date.valueOf(emp.birth));
+        
+        pstmt.execute();
+        System.out.println("Mentve");
+        conn.close();
+        
+    }
+    
+    private void storeEmployee() {
+        try {
+            tryStoreEmployee();
+        } catch (ClassNotFoundException e) {
+            System.err.println("Driver nincs betoltve");
+        } catch (SQLException e) {
+            System.err.println("SQL hiba");
+        }
+        
+    }
+    
+    private Employee retrieveEmployee() {
+        
+        return new Employee(
+            Integer.parseInt(idField.getText()),
+            nameField.getText(),
+            cityField.getText(),
+            Double.parseDouble(salaryField.getText()),
+            LocalDate.parse(birthField.getText())
+        );
     }
     
     private void storeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storeButtonActionPerformed
